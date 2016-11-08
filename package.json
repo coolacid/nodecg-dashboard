@@ -1,6 +1,6 @@
 {
     "name": "nodecg-dashboard",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Dashboard showing viewers, followers, uptime, and stream title",
     "authors": [
         "Elliot DeNolf"
@@ -14,7 +14,7 @@
         "request": "^2.61.0"
     },
     "nodecg": {
-        "compatibleRange": "~0.7.0",
+        "compatibleRange": "~0.8.0",
         "dashboardPanels": [{
             "headerColor": "#564573",
             "name": "nodecg-twitch-dashboard",
