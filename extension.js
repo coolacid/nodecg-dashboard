@@ -12,15 +12,16 @@ function Dashboard (nodecg) {
   var twitchTitle = nodecg.Replicant('twitchTitle');
   var twitchStreaming = nodecg.Replicant('twitchStreaming');
   var twitchStarted = nodecg.Replicant('twitchStarted', {persistent: false});
+  var clientid = nodecg.bundleConfig.clientid
 
-  getViewers(username, twitchStreaming, twitchViewers, twitchStarted);
-  getFollowers(username, twitchTitle, twitchFollowers);
-  setInterval(getViewers, updateViewerInterval * 1000, username, twitchStreaming, twitchViewers, twitchStarted);
-  setInterval(getFollowers, updateFollowerInterval * 1000, username, twitchTitle, twitchFollowers);
+  getViewers(username, twitchStreaming, twitchViewers, twitchStarted, clientid);
+  getFollowers(username, twitchTitle, twitchFollowers, clientid);
+  setInterval(getViewers, updateViewerInterval * 1000, username, twitchStreaming, twitchViewers, twitchStarted, clientid);
+  setInterval(getFollowers, updateFollowerInterval * 1000, username, twitchTitle, twitchFollowers, clientid);
 }
 
-  function getViewers(username, twitchStreaming, twitchViewers, twitchStarted) {
-    var url = 'https://api.twitch.tv/kraken/streams/' + username;
+  function getViewers(username, twitchStreaming, twitchViewers, twitchStarted, clientid) {
+    var url = 'https://api.twitch.tv/kraken/streams/' + username + '?client_id=' + clientid;
     try {
       request(url, function (error, response, body) {
         if (!error && response.statusCode === 200) {
@@ -42,8 +43,8 @@ function Dashboard (nodecg) {
     }
   }
 
-  function getFollowers(username, twitchTitle, twitchFollowers) {
-    var url = 'https://api.twitch.tv/kraken/channels/' + username;
+  function getFollowers(username, twitchTitle, twitchFollowers, clientid) {
+    var url = 'https://api.twitch.tv/kraken/channels/' + username + '?client_id=' + clientid;
     request(url, function (error, response, body) {
       if (response !== undefined && !error && response.statusCode === 200) {
         var data = JSON.parse(body);
